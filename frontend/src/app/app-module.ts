@@ -23,6 +23,7 @@ import { Insights } from './components/views/insights/insights';
 import { Streaks } from './components/views/streaks/streaks';
 import { Achievements } from './components/views/achievements/achievements';
 import { Notifications } from './components/views/notifications/notifications';
+import { CoachComponent } from './components/views/coach/coach.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { Notifications } from './components/views/notifications/notifications';
     ReactiveFormsModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatMenuModule
+    MatMenuModule,
+    CoachComponent
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

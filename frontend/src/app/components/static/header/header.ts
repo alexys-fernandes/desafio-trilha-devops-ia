@@ -33,6 +33,7 @@ export class Header implements OnInit, OnDestroy {
     { label: 'Conquistas', icon: 'emoji_events', link: '/achievements' },
     { label: 'Recorrências', icon: 'repeat', link: '/recurrences' },
     { label: 'Notificações', icon: 'notifications', link: '/notifications' },
+    { label: 'Coach', icon: 'smart_toy', link: '/coach' }
   ];
   private isAuthenticated = false;
   private sidebarWasToggled = false;

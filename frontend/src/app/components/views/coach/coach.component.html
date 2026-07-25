@@ -1,0 +1,49 @@
+<div class="container coach-shell">
+  <section class="coach-hero" aria-labelledby="coach-title">
+    <div>
+      <p class="section-kicker">Coach</p>
+      <h1 id="coach-title">Seu aliado para retomar os hábitos com leveza.</h1>
+      <p>
+        Converse com o assistente para receber orientações curtas, motivadoras e personalizadas.
+      </p>
+    </div>
+    <div class="coach-badge" aria-label="Status do assistente">
+      <span class="material-icons" aria-hidden="true">psychology</span>
+      <small>IA de apoio</small>
+    </div>
+  </section>
+
+  <section class="coach-card" aria-label="Área do coach de hábitos">
+    <label class="coach-label" for="coach-message">Como você quer começar hoje?</label>
+    <textarea
+      id="coach-message"
+      rows="5"
+      [(ngModel)]="message"
+      placeholder="Ex.: Estou desanimado com meus hábitos e quero voltar devagar."
+    ></textarea>
+
+    <div class="coach-actions">
+      <button type="button" class="coach-button" (click)="send()" [disabled]="loading">
+        <span class="material-icons" aria-hidden="true">send</span>
+        <span>{{ loading ? 'Pensando...' : 'Enviar para o coach' }}</span>
+      </button>
+    </div>
+
+    <div *ngIf="loading || response || errorMessage" class="coach-result" aria-live="polite">
+      <div *ngIf="loading" class="coach-status">
+        <span class="spinner-border" aria-hidden="true"></span>
+        <span>Montando uma resposta personalizada...</span>
+      </div>
+
+      <div *ngIf="errorMessage && !loading" class="coach-response coach-response--error">
+        <h2>Erro ao consultar o coach</h2>
+        <p>{{ errorMessage }}</p>
+      </div>
+
+      <div *ngIf="response && !loading" class="coach-response">
+        <h2>Resposta do coach</h2>
+        <p>{{ response }}</p>
+      </div>
+    </div>
+  </section>
+</div>

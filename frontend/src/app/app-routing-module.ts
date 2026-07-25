@@ -8,6 +8,7 @@ import { Insights } from './components/views/insights/insights';
 import { Streaks } from './components/views/streaks/streaks';
 import { Achievements } from './components/views/achievements/achievements';
 import { Notifications } from './components/views/notifications/notifications';
+import { CoachComponent } from './components/views/coach/coach.component';
 
 const routes: Routes = [
   { path: 'login', component: Login },
@@ -17,6 +18,7 @@ const routes: Routes = [
   { path: 'streaks', component: Streaks, canActivate: [authGuard] },
   { path: 'achievements', component: Achievements, canActivate: [authGuard] },
   { path: 'notifications', component: Notifications, canActivate: [authGuard] },
+  { path: 'coach', component: CoachComponent },
   { path: '', redirectTo: 'habits', pathMatch: 'full' },
   { path: '**', redirectTo: 'habits' }
 ];

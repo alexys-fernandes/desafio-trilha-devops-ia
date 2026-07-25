@@ -14,3 +14,6 @@
 *.sqlite
 *.sqlite3
 appsettings.Development.json
+.env
+.env.example
+*.env.example

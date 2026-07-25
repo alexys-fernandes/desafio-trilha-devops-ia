@@ -1,0 +1,181 @@
+@use 'variables' as global;
+
+:host {
+  display: block;
+}
+
+.coach-shell {
+  width: min(100%, 860px);
+  display: grid;
+  gap: 0.9rem;
+  padding-top: clamp(0.25rem, 1.6vw, 1rem);
+  padding-bottom: clamp(1.5rem, 5vw, 4rem);
+  color: global.$text-main;
+}
+
+.coach-hero,
+.coach-card {
+  border-radius: global.$radius-lg;
+  background: global.$surface-low;
+  box-shadow: global.$shadow-sm;
+}
+
+.coach-hero {
+  display: grid;
+  gap: 1rem;
+  align-items: end;
+  padding: clamp(1.15rem, 4vw, 1.75rem);
+}
+
+.section-kicker {
+  margin: 0 0 0.35rem;
+  color: global.$text-subtle;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.coach-hero h1 {
+  max-width: 16ch;
+  font-size: clamp(1rem, 4vw, 1.72rem);
+  line-height: 0.98;
+  margin: 0;
+  color: global.$text-main;
+}
+
+.coach-hero p {
+  margin: 0.65rem 0 0;
+  color: global.$text-muted;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.coach-badge {
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, global.$primary-color 12%, global.$surface-high);
+  padding: 0.6rem 0.8rem;
+  color: global.$primary-color;
+  font-weight: 800;
+}
+
+.coach-card {
+  display: grid;
+  gap: 0.9rem;
+  padding: clamp(1rem, 3vw, 1.4rem);
+}
+
+.coach-label {
+  color: global.$text-subtle;
+  font-size: 0.8rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+textarea {
+  width: 100%;
+  min-height: 140px;
+  border: 1px solid color-mix(in srgb, global.$outline 60%, transparent);
+  border-radius: global.$radius-md;
+  padding: 0.9rem 1rem;
+  resize: vertical;
+  background: global.$surface-high;
+  color: global.$text-main;
+  font: inherit;
+}
+
+textarea:focus {
+  outline: 2px solid color-mix(in srgb, global.$primary-color 30%, transparent);
+  border-color: global.$primary-color;
+}
+
+.coach-actions {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.coach-button {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 0;
+  border-radius: global.$radius-lg;
+  background: global.$primary-color;
+  color: global.$surface-low;
+  padding: 0.7rem 1rem;
+  font-weight: 850;
+  cursor: pointer;
+}
+
+.coach-button:disabled {
+  opacity: 0.75;
+  cursor: wait;
+}
+
+.coach-result {
+  display: grid;
+  gap: 0.7rem;
+}
+
+.coach-status,
+.coach-response {
+  border-radius: global.$radius-md;
+  padding: 0.9rem 1rem;
+  background: global.$surface-high;
+}
+
+.coach-status {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: global.$text-muted;
+  font-weight: 750;
+}
+
+.coach-response h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+  color: global.$text-main;
+}
+
+.coach-response p {
+  margin: 0;
+  color: global.$text-muted;
+  line-height: 1.5;
+  white-space: pre-line;
+}
+
+.coach-response--error {
+  border: 1px solid color-mix(in srgb, #d9534f 35%, transparent);
+  background: color-mix(in srgb, #d9534f 10%, global.$surface-high);
+}
+
+.coach-response--error h2 {
+  color: #d9534f;
+}
+
+.coach-response--error p {
+  color: #a33a35;
+}
+
+.spinner-border {
+  width: 1.15rem;
+  height: 1.15rem;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, global.$primary-color 30%, transparent);
+  border-top-color: global.$primary-color;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
