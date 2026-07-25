@@ -1,14 +1,21 @@
-using HabitApp.Application;
 using HabitApp.Application.Dtos;
+using HabitApp.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HabitApp.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class AICoachController(AICoachApplicationService aiCoachApplicationService) : ControllerBase
+public class AICoachController(IAICoachApplicationService aiCoachApplicationService) : ControllerBase
 {
-    private readonly AICoachApplicationService _aiCoachApplicationService = aiCoachApplicationService;
+    private readonly IAICoachApplicationService _aiCoachApplicationService = aiCoachApplicationService;
+
+    [HttpGet("health")]
+    public async Task<ActionResult<object>> Health()
+    {
+        var result = await _aiCoachApplicationService.CheckHealthAsync();
+        return Ok(result);
+    }
 
     [HttpPost("sendMessage")]
     public async Task<ActionResult<AICoachResponseDto>> SendMessage([FromBody] AICoachRequestDto request)

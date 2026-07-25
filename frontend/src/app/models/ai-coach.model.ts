@@ -1,7 +1,6 @@
 export interface AICoachRequest {
   userId: number;
   message: string;
-  contextSummary?: string;
 }
 
 export interface AICoachResponse {

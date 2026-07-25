@@ -33,8 +33,7 @@ export class CoachComponent {
 
     this.aiCoachService.sendMessage({
       userId: 1,
-      message: this.message.trim(),
-      contextSummary: 'Quero voltar a estudar todos os dias'
+      message: this.message.trim()
     }).pipe(
       finalize(() => {
         this.loading = false;

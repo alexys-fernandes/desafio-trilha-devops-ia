@@ -28,6 +28,6 @@ public static class ModuleIOC
         services.AddScoped<INotificationPreferenceRepository, NotificationPreferenceRepository>();
         services.AddScoped<IRecurrenceService, RecurrenceService>();
         services.AddScoped<IDateService, BrasiliaDateService>();
-        services.AddScoped<AICoachApplicationService>();
+        services.AddScoped<IAICoachApplicationService, AICoachApplicationService>();
     }
 }

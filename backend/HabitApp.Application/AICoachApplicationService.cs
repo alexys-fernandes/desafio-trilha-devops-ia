@@ -1,18 +1,16 @@
 using Google.GenAI;
 using HabitApp.Application.Dtos;
+using HabitApp.Application.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Text.Json;
 
 namespace HabitApp.Application;
 
-public class AICoachApplicationService(IConfiguration configuration, HttpClient httpClient)
+public class AICoachApplicationService(IConfiguration configuration) : IAICoachApplicationService
 {
     private readonly IConfiguration _configuration = configuration;
 
-    private static Client CreateClient(string apiKey)
-    {
-        return new Client(apiKey: apiKey);
-    }
+    private static Client CreateClient(string apiKey) => new(apiKey: apiKey);
 
     public async Task<AICoachResponseDto> SendMessageAsync(AICoachRequestDto request)
     {
@@ -86,14 +84,68 @@ public class AICoachApplicationService(IConfiguration configuration, HttpClient 
         }
     }
 
+    public async Task<object> CheckHealthAsync()
+    {
+        var enabled = _configuration["AI_ENABLED"]?.Equals("true", StringComparison.OrdinalIgnoreCase) ?? false;
+        var provider = _configuration["AI_PROVIDER"] ?? "gemini";
+
+        if (!enabled)
+        {
+            return new
+            {
+                success = false,
+                provider,
+                available = false,
+                message = "O coach de IA está desativado."
+            };
+        }
+
+        var apiKey = _configuration["GEMINI_API_KEY"];
+        if (string.IsNullOrWhiteSpace(apiKey))
+        {
+            return new
+            {
+                success = false,
+                provider,
+                available = false,
+                message = "A chave da IA não está configurada."
+            };
+        }
+
+        try
+        {
+            var client = CreateClient(apiKey);
+            using var cts = new CancellationTokenSource(TimeSpan.FromSeconds(15));
+            var response = await client.Models.GenerateContentAsync(
+                model: _configuration["GEMINI_MODEL"] ?? "gemini-3.5-flash",
+                contents: "Responda apenas com a palavra OK.",
+                cancellationToken: cts.Token
+            );
+
+            return new
+            {
+                success = true,
+                provider,
+                available = !string.IsNullOrWhiteSpace(response.Text),
+                message = "Coach disponível"
+            };
+        }
+        catch (Exception ex)
+        {
+            return new
+            {
+                success = false,
+                provider,
+                available = false,
+                message = ex.Message
+            };
+        }
+    }
+
     private string BuildPrompt(AICoachRequestDto request)
     {
-        var context = string.IsNullOrWhiteSpace(request.ContextSummary)
-            ? "O usuário quer melhorar seus hábitos."
-            : request.ContextSummary;
-
         var systemPrompt = NormalizePrompt(_configuration["AI_COACH_SYSTEM_PROMPT"]);
-        return $"{systemPrompt}\n\nContexto do usuário: {context}\nPergunta: {request.Message}\nResponda em português e com até 120 palavras.";
+        return $"{systemPrompt}\n\nPergunta: {request.Message}\nResponda em português e com até 120 palavras.";
     }
 
     private static string NormalizePrompt(string? value)
