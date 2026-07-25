@@ -1,0 +1,37 @@
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="tileShadow" x="108" y="116" width="808" height="828" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="30" stdDeviation="38" flood-color="#26232D" flood-opacity="0.12"/>
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#26232D" flood-opacity="0.05"/>
+    </filter>
+    <linearGradient id="pinkAccent" x1="401" y1="600" x2="696" y2="424" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FC6976"/>
+      <stop offset="1" stop-color="#F86D7D"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1024" height="1024" fill="#FDFBFB"/>
+  <g filter="url(#tileShadow)">
+    <rect x="174" y="158" width="676" height="676" rx="150" fill="#FDFBFB"/>
+  </g>
+
+  <path
+    d="M632 704H382C319.04 704 268 652.96 268 590V430C268 367.04 319.04 316 382 316H620C685.17 316 738 368.83 738 434"
+    stroke="#26232D"
+    stroke-width="58"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <path
+    d="M410 514L498 602L656 430"
+    stroke="url(#pinkAccent)"
+    stroke-width="62"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+
+  <path d="M720 454H804" stroke="#FC6976" stroke-width="58" stroke-linecap="round"/>
+  <path d="M720 544H804" stroke="#D6D2D4" stroke-width="58" stroke-linecap="round"/>
+  <path d="M720 634H804" stroke="#26232D" stroke-width="58" stroke-linecap="round"/>
+</svg>

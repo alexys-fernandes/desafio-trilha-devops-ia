@@ -1,0 +1,109 @@
+@let resolvedTheme = resolvedTheme$ | async;
+
+@if (isLoggedIn$ | async; as user) {
+  <aside
+    class="sidebar-shell"
+    [class.sidebar-shell--collapsed]="isSidebarCollapsed"
+    aria-label="Navegação principal"
+  >
+    <div class="sidebar-brand">
+      <button
+        type="button"
+        class="sidebar-toggle"
+        (click)="toggleSidebar()"
+        [attr.aria-label]="isSidebarCollapsed ? 'Expandir barra lateral' : 'Recolher barra lateral'"
+        [attr.aria-expanded]="!isSidebarCollapsed"
+      >
+        <span class="material-icons" aria-hidden="true">
+          {{ isSidebarCollapsed ? 'menu' : 'keyboard_double_arrow_left' }}
+        </span>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Principal">
+      @for (item of navigationItems; track item.link) {
+        <a
+          [routerLink]="item.link"
+          routerLinkActive="active"
+          ariaCurrentWhenActive="page"
+          class="sidebar-nav__link"
+          [attr.aria-label]="item.label"
+          [title]="isSidebarCollapsed ? item.label : null"
+        >
+          <span class="material-icons sidebar-nav__icon" aria-hidden="true">{{ item.icon }}</span>
+          <span class="sidebar-nav__label">{{ item.label }}</span>
+        </a>
+      }
+    </nav>
+
+    <div class="sidebar-footer">
+      <button
+        type="button"
+        class="sidebar-utility"
+        (click)="toggleTheme()"
+        [attr.aria-label]="resolvedTheme === 'dark' ? 'Usar tema claro' : 'Usar tema escuro'"
+        [attr.aria-pressed]="resolvedTheme === 'dark'"
+        [title]="isSidebarCollapsed ? (resolvedTheme === 'dark' ? 'Tema claro' : 'Tema escuro') : null"
+      >
+        <span class="material-icons sidebar-utility__icon" aria-hidden="true">
+          {{ resolvedTheme === 'dark' ? 'dark_mode' : 'light_mode' }}
+        </span>
+        <span class="sidebar-utility__label">
+          {{ resolvedTheme === 'dark' ? 'Modo escuro' : 'Modo claro' }}
+        </span>
+      </button>
+    </div>
+  </aside>
+
+  <header
+    class="header-container sticky-top"
+    [class.header-container--collapsed]="isSidebarCollapsed"
+  >
+    <div class="container header-inner">
+      <a routerLink="/habits" class="brand-lockup" aria-label="Painel de hábitos">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="app-logo.svg" alt="" class="brand-logo" />
+        </span>
+        <span class="brand-copy">
+          <span class="brand-kicker">Hábitos</span>
+          <span class="sidebar-title">Hábitos</span>
+        </span>
+      </a>
+
+      <div class="header-actions">
+        <div class="profile-container">
+          <span class="user-name">{{ user.name }}</span>
+          <button
+            type="button"
+            class="btn-avatar"
+            [matMenuTriggerFor]="profileMenu"
+            [attr.aria-label]="'Abrir menu do perfil de ' + user.name"
+          >
+            <span class="profile-avatar__initial" aria-hidden="true">{{
+              user.name.charAt(0) | uppercase
+            }}</span>
+            <span class="material-icons profile-avatar__chevron" aria-hidden="true"
+              >expand_more</span
+            >
+          </button>
+        </div>
+
+        <mat-menu
+          #profileMenu="matMenu"
+          xPosition="before"
+          yPosition="below"
+          class="custom-profile-menu"
+        >
+          <button mat-menu-item (click)="openEditUserDialog(user)">
+            <span class="material-icons menu-icon" aria-hidden="true">manage_accounts</span>
+            <span>Atualizar perfil</span>
+          </button>
+          <button mat-menu-item class="menu-danger" (click)="logout()">
+            <span class="material-icons menu-icon" aria-hidden="true">logout</span>
+            <span>Sair</span>
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+  </header>
+}

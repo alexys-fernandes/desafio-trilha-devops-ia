@@ -1,0 +1,412 @@
+@use 'variables' as global;
+
+:host {
+  display: block;
+}
+
+.insights-shell {
+  width: min(100%, 960px);
+  display: grid;
+  gap: 0.9rem;
+  padding-top: clamp(0.25rem, 1.6vw, 1rem);
+  padding-bottom: clamp(1.5rem, 5vw, 4rem);
+  color: global.$text-main;
+}
+
+.insights-hero,
+.metric-card,
+.chart-card,
+.pattern-card,
+.calendar-card,
+.habit-insight-card,
+.insight-message,
+.empty-state,
+.insights-loading {
+  border-radius: global.$radius-lg;
+  background: global.$surface-low;
+  box-shadow: global.$shadow-sm;
+}
+
+.insights-hero {
+  display: grid;
+  gap: 1.1rem;
+  align-items: end;
+  padding: clamp(1.15rem, 4vw, 1.75rem);
+}
+
+.section-kicker {
+  margin: 0 0 0.35rem;
+  color: global.$text-subtle;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  color: global.$text-main;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.insights-hero h1,
+.empty-state h1 {
+  max-width: 13ch;
+  font-size: clamp(1rem, 4vw, 1.72rem);
+  line-height: 0.98;
+}
+
+.insights-hero p:not(.section-kicker),
+.pattern-card p,
+.habit-insight-card p,
+.empty-state p {
+  margin: 0.65rem 0 0;
+  color: global.$text-muted;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.hero-score {
+  width: min(100%, 180px);
+  display: grid;
+  gap: 0.15rem;
+  border-radius: global.$radius-lg;
+  background: color-mix(in srgb, global.$primary-color 12%, global.$surface-high);
+  padding: 1rem;
+}
+
+.hero-score span {
+  color: global.$primary-color;
+  font-size: clamp(2.1rem, 8vw, 3rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.hero-score small,
+.metric-card small,
+.calendar-legend,
+.habit-insight-card__stats {
+  color: global.$text-muted;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.insight-message-grid,
+.overview-grid,
+.pattern-grid,
+.trend-layout,
+.habit-breakdown-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.insight-message-grid {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.insight-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.85rem;
+}
+
+.insight-message .material-icons {
+  color: global.$primary-color;
+  font-size: 1.2rem;
+}
+
+.insight-message p {
+  margin: 0;
+  color: global.$text-main;
+  font-size: 0.9rem;
+  font-weight: 760;
+  line-height: 1.35;
+}
+
+.overview-grid,
+.pattern-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.metric-card,
+.pattern-card,
+.chart-card,
+.calendar-card,
+.habit-insight-card {
+  min-width: 0;
+  padding: 0.95rem;
+}
+
+.metric-card {
+  display: grid;
+  gap: 0.18rem;
+}
+
+.metric-card__label,
+.pattern-card__eyebrow {
+  color: global.$text-subtle;
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.metric-card strong {
+  color: global.$text-main;
+  font-size: clamp(1.7rem, 5vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.trend-layout {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.9rem;
+  margin-bottom: 0.9rem;
+}
+
+.section-heading h2,
+.pattern-card h2 {
+  font-size: clamp(1.08rem, 3vw, 1.3rem);
+  line-height: 1.12;
+}
+
+.section-heading > span {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: global.$surface-high;
+  color: global.$text-main;
+  padding: 0.36rem 0.62rem;
+  font-size: 0.78rem;
+  font-weight: 850;
+}
+
+.bar-chart {
+  height: 130px;
+  display: grid;
+  align-items: end;
+  gap: 0.3rem;
+}
+
+.bar-chart--weekly {
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.bar-chart--monthly {
+  grid-template-columns: repeat(30, minmax(0, 1fr));
+  gap: 0.18rem;
+}
+
+.trend-bar {
+  min-height: 8px;
+  border-radius: 999px 999px 4px 4px;
+  background: global.$primary-color;
+  transition:
+    height global.$transition-base,
+    background-color global.$transition-base;
+}
+
+.trend-bar--empty {
+  background: color-mix(in srgb, global.$outline 70%, transparent);
+}
+
+.calendar-card {
+  display: grid;
+  gap: 0.9rem;
+}
+
+.calendar-heatmap {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 12px);
+  gap: 5px;
+  align-items: center;
+}
+
+.heatmap-cell {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  border-radius: 3px;
+  background: global.$surface-high;
+}
+
+.heatmap-cell--none {
+  background: color-mix(in srgb, global.$outline 52%, transparent);
+}
+
+.heatmap-cell--missed {
+  background: color-mix(in srgb, global.$outline-strong 50%, global.$surface-high);
+}
+
+.heatmap-cell--partial {
+  background: color-mix(in srgb, global.$primary-color 52%, global.$surface-high);
+}
+
+.heatmap-cell--perfect {
+  background: global.$primary-color;
+}
+
+.calendar-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.habit-breakdown {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.habit-breakdown-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+}
+
+.habit-insight-card {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.habit-insight-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.habit-insight-card__icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: global.$radius-lg;
+  background: global.$surface-high;
+  font-size: 1.25rem;
+}
+
+.habit-insight-card h3 {
+  font-size: 1rem;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.habit-insight-card p {
+  margin-top: 0.24rem;
+  font-size: 0.8rem;
+}
+
+.habit-progress {
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, global.$outline 56%, transparent);
+}
+
+.habit-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: global.$primary-color;
+}
+
+.habit-insight-card__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.habit-insight-card__stats span {
+  border-radius: 999px;
+  background: global.$surface-high;
+  padding: 0.32rem 0.52rem;
+}
+
+.empty-state,
+.insights-loading {
+  display: grid;
+  place-items: center;
+  gap: 0.7rem;
+  padding: clamp(2rem, 8vw, 3.5rem) 1rem;
+  text-align: center;
+}
+
+.empty-state--compact {
+  grid-column: 1 / -1;
+  padding-block: 2rem;
+}
+
+.empty-state__icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: global.$radius-lg;
+  background: color-mix(in srgb, global.$primary-color 14%, transparent);
+  color: global.$primary-color;
+  font-size: 1.65rem;
+}
+
+.insights-secondary {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 0;
+  border-radius: global.$radius-lg;
+  background: global.$text-main;
+  color: global.$surface-low;
+  padding: 0.65rem 0.95rem;
+  font-weight: 850;
+}
+
+.insights-loading {
+  min-height: 260px;
+  color: global.$text-muted;
+  font-weight: 850;
+}
+
+.insights-loading .spinner-border {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: global.$primary-color;
+}
+
+@media (min-width: 768px) {
+  .insights-hero {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .trend-layout {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  }
+}
+
+@media (max-width: 575.98px) {
+  .insights-shell {
+    padding-inline: 0.7rem;
+  }
+
+  .overview-grid,
+  .pattern-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .calendar-heatmap {
+    grid-template-columns: repeat(auto-fill, 11px);
+    gap: 4px;
+  }
+
+  .heatmap-cell {
+    width: 11px;
+    height: 11px;
+  }
+}

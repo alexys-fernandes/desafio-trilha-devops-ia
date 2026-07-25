@@ -1,0 +1,32 @@
+<section class="app-dialog confirm-dialog" data-testid="confirm-dialog">
+  <header mat-dialog-title class="dialog-header confirm-header">
+    <span class="dialog-icon material-icons" aria-hidden="true">warning_amber</span>
+    <div class="dialog-heading">
+      <p class="dialog-kicker">Confirmação</p>
+      <h2>{{ data.title }}</h2>
+    </div>
+  </header>
+
+  <mat-dialog-content class="dialog-content">
+    <div id="confirm-message" class="confirm-message" [innerHTML]="data.message"></div>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button
+      type="button"
+      class="btn dialog-button dialog-button--ghost"
+      data-testid="confirm-cancel-button"
+      (click)="onCancel()"
+    >
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="btn dialog-button dialog-button--danger"
+      data-testid="confirm-action-button"
+      (click)="onConfirm()"
+    >
+      {{ data.confirmBtnText || 'Confirmar' }}
+    </button>
+  </mat-dialog-actions>
+</section>

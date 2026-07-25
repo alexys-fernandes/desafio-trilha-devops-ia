@@ -1,0 +1,168 @@
+@use 'variables' as global;
+
+:host {
+  display: block;
+}
+
+.habit-dialog {
+  .dialog-icon {
+    background-color: color-mix(in srgb, global.$primary-container 82%, global.$surface-low);
+  }
+}
+
+.icon-picker {
+  min-width: 0;
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid global.$outline;
+  border-radius: global.$radius-lg;
+  background-color: color-mix(in srgb, global.$surface-high 86%, global.$surface-low);
+}
+
+.icon-selection-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+.icon-choice-btn {
+  width: 100%;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid global.$outline;
+  border-radius: global.$radius-md;
+  background-color: global.$surface-low;
+  color: global.$text-main;
+  box-shadow: global.$shadow-sm;
+  font-size: 1.45rem;
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color global.$transition-fast,
+    border-color global.$transition-fast,
+    box-shadow global.$transition-fast,
+    transform global.$transition-fast;
+
+  &:hover {
+    border-color: global.$outline-strong;
+    background-color: global.$primary-container;
+    box-shadow: global.$shadow-md;
+    transform: translateY(-1px);
+  }
+
+  &.selected {
+    border-color: global.$primary-color;
+    background-color: global.$primary-color;
+    color: global.$on-primary;
+    box-shadow: 0 0 0 4px var(--app-focus-ring);
+    transform: translateY(-1px);
+  }
+}
+
+.icon-picker--invalid {
+  border-color: global.$danger-color;
+  box-shadow: 0 0 0 0.22rem color-mix(in srgb, global.$danger-color 14%, transparent);
+}
+
+.recurrence-picker,
+.reminder-picker {
+  min-width: 0;
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid global.$outline;
+  border-radius: global.$radius-lg;
+  background-color: color-mix(in srgb, global.$surface-high 86%, global.$surface-low);
+}
+
+.recurrence-select {
+  width: 100%;
+}
+
+.weekday-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.weekday-choice {
+  min-height: 36px;
+  border: 1px solid global.$outline;
+  border-radius: 999px;
+  background: global.$surface-low;
+  color: global.$text-muted;
+  padding: 0 0.72rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.weekday-choice.selected {
+  border-color: global.$primary-color;
+  background: global.$primary-color;
+  color: global.$on-primary;
+}
+
+.recurrence-number {
+  display: grid;
+  grid-template-columns: auto minmax(78px, 110px) auto;
+  align-items: center;
+  gap: 0.55rem;
+  color: global.$text-muted;
+  font-weight: 750;
+}
+
+.reminder-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  border-radius: global.$radius-md;
+  background: global.$surface-low;
+  padding: 0.75rem;
+}
+
+.reminder-toggle span {
+  min-width: 0;
+  display: grid;
+  gap: 0.15rem;
+}
+
+.reminder-toggle strong {
+  color: global.$text-main;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.reminder-toggle small {
+  color: global.$text-muted;
+  font-size: 0.76rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.reminder-toggle input[type='checkbox'] {
+  width: 1.2rem;
+  height: 1.2rem;
+  flex: 0 0 auto;
+  accent-color: global.$primary-color;
+}
+
+.reminder-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 0.55rem;
+}
+
+@media (max-width: 575.98px) {
+  .icon-selection-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .reminder-grid {
+    grid-template-columns: 1fr;
+  }
+}

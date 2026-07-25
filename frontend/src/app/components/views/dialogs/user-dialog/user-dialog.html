@@ -1,0 +1,112 @@
+<section class="app-dialog user-dialog" data-testid="user-dialog">
+  <header mat-dialog-title class="dialog-header">
+    <span class="dialog-icon material-icons" aria-hidden="true">account_circle</span>
+    <div class="dialog-heading">
+      <p class="dialog-kicker">Perfil</p>
+      <h2>Meus dados</h2>
+    </div>
+  </header>
+
+  <mat-dialog-content class="dialog-content">
+    <form #userForm="ngForm" class="dialog-form">
+      <label class="dialog-field" for="user-name">
+        <span class="dialog-label">Nome completo</span>
+        <span class="dialog-control">
+          <span class="material-icons dialog-control__icon" aria-hidden="true">person</span>
+          <input
+            id="user-name"
+            data-testid="user-name-input"
+            type="text"
+            class="form-control theme-input dialog-input"
+            [(ngModel)]="formData.name"
+            name="name"
+            #name="ngModel"
+            required
+            placeholder="Seu nome"
+            autocomplete="name"
+            [attr.aria-invalid]="name.invalid && (name.dirty || name.touched) ? 'true' : 'false'"
+            aria-describedby="user-name-error"
+          />
+        </span>
+        <span
+          *ngIf="name.invalid && (name.dirty || name.touched)"
+          id="user-name-error"
+          class="dialog-error"
+          role="alert"
+        >
+          O nome é obrigatório.
+        </span>
+      </label>
+
+      <label class="dialog-field" for="user-email">
+        <span class="dialog-label">E-mail</span>
+        <span class="dialog-control">
+          <span class="material-icons dialog-control__icon" aria-hidden="true"
+            >alternate_email</span
+          >
+          <input
+            id="user-email"
+            data-testid="user-email-input"
+            type="email"
+            class="form-control theme-input dialog-input"
+            [(ngModel)]="formData.email"
+            name="email"
+            #email="ngModel"
+            required
+            email
+            placeholder="seuemail@exemplo.com"
+            autocomplete="email"
+            [attr.aria-invalid]="email.invalid && (email.dirty || email.touched) ? 'true' : 'false'"
+            aria-describedby="user-email-error"
+          />
+        </span>
+        <span
+          *ngIf="email.invalid && (email.dirty || email.touched)"
+          id="user-email-error"
+          class="dialog-error"
+          role="alert"
+        >
+          Informe um e-mail válido.
+        </span>
+      </label>
+
+      <label class="dialog-field" for="user-password">
+        <span class="dialog-label"
+          >Nova senha <span class="dialog-label__optional">(opcional)</span></span
+        >
+        <span class="dialog-control">
+          <span class="material-icons dialog-control__icon" aria-hidden="true">lock_reset</span>
+          <input
+            id="user-password"
+            data-testid="user-password-input"
+            type="password"
+            class="form-control theme-input dialog-input"
+            [(ngModel)]="formData.password"
+            name="password"
+            placeholder="Deixe em branco para não alterar"
+            autocomplete="new-password"
+            aria-describedby="user-password-help"
+          />
+        </span>
+        <span id="user-password-help" class="dialog-help">
+          Preencha apenas se quiser trocar a senha atual.
+        </span>
+      </label>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button type="button" class="btn dialog-button dialog-button--ghost" (click)="onClose()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="btn dialog-button dialog-button--primary"
+      data-testid="user-save-button"
+      [disabled]="userForm.invalid"
+      (click)="onSave()"
+    >
+      Salvar alterações
+    </button>
+  </mat-dialog-actions>
+</section>

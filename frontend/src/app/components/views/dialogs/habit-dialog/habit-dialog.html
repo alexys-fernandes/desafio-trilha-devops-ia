@@ -1,0 +1,217 @@
+<section class="app-dialog habit-dialog" data-testid="habit-dialog">
+  <header mat-dialog-title class="dialog-header">
+    <span class="dialog-icon material-icons" aria-hidden="true">flag</span>
+    <div class="dialog-heading">
+      <p class="dialog-kicker">Rotina semanal</p>
+      <h2>{{ data?.id ? 'Editar hábito' : 'Novo hábito' }}</h2>
+    </div>
+  </header>
+
+  <mat-dialog-content class="dialog-content">
+    <form #habitForm="ngForm" class="dialog-form">
+      <label class="dialog-field" for="habit-title">
+        <span class="dialog-label">Nome do hábito</span>
+        <span class="dialog-control">
+          <span class="material-icons dialog-control__icon" aria-hidden="true">edit_note</span>
+          <input
+            id="habit-title"
+            data-testid="habit-title-input"
+            type="text"
+            class="form-control theme-input dialog-input"
+            [(ngModel)]="formData.title"
+            name="title"
+            #title="ngModel"
+            required
+            placeholder="Ex: Beber água"
+            autocomplete="off"
+            [attr.aria-invalid]="title.invalid && (title.dirty || title.touched) ? 'true' : 'false'"
+            aria-describedby="habit-title-error"
+          />
+        </span>
+        <span
+          *ngIf="title.invalid && (title.dirty || title.touched)"
+          id="habit-title-error"
+          class="dialog-error"
+          role="alert"
+        >
+          O nome é obrigatório.
+        </span>
+      </label>
+
+      <fieldset
+        class="icon-picker"
+        [class.icon-picker--invalid]="!formData.icon && habitForm.submitted"
+      >
+        <legend class="dialog-label">Escolha um ícone</legend>
+        <div class="icon-selection-grid" role="radiogroup" aria-label="Ícones sugeridos">
+          <button
+            type="button"
+            *ngFor="let icon of iconSuggestions"
+            class="icon-choice-btn"
+            data-testid="habit-icon-option"
+            [class.selected]="formData.icon === icon"
+            [attr.aria-pressed]="formData.icon === icon"
+            (click)="selectIcon(icon)"
+          >
+            <span aria-hidden="true">{{ icon }}</span>
+          </button>
+        </div>
+        <input
+          type="hidden"
+          [(ngModel)]="formData.icon"
+          name="icon"
+          required
+          #iconHidden="ngModel"
+        />
+        <span *ngIf="!formData.icon && habitForm.submitted" class="dialog-error" role="alert">
+          Selecione um ícone.
+        </span>
+      </fieldset>
+
+      <fieldset class="recurrence-picker">
+        <legend class="dialog-label">Recorrência</legend>
+        <label class="dialog-control recurrence-select" for="habit-recurrence">
+          <span class="material-icons dialog-control__icon" aria-hidden="true">event_repeat</span>
+          <select
+            id="habit-recurrence"
+            class="form-select theme-input dialog-input"
+            name="recurrenceType"
+            [(ngModel)]="formData.recurrenceType"
+            (ngModelChange)="onRecurrenceTypeChange()"
+          >
+            <option *ngFor="let option of recurrenceOptions" [value]="option.value">
+              {{ option.label }}
+            </option>
+          </select>
+        </label>
+
+        <div *ngIf="formData.recurrenceType === 'SpecificDaysOfWeek'" class="weekday-picker">
+          <button
+            type="button"
+            *ngFor="let day of weekDays"
+            class="weekday-choice"
+            [class.selected]="isWeekDaySelected(day.value)"
+            [attr.aria-pressed]="isWeekDaySelected(day.value)"
+            (click)="toggleWeekDay(day.value)"
+          >
+            {{ day.label }}
+          </button>
+        </div>
+
+        <label
+          *ngIf="formData.recurrenceType === 'EveryXDays'"
+          class="recurrence-number"
+          for="habit-interval"
+        >
+          <span class="dialog-label">Repetir a cada</span>
+          <input
+            id="habit-interval"
+            type="number"
+            class="form-control theme-input dialog-input"
+            min="1"
+            max="30"
+            name="intervalDays"
+            [(ngModel)]="intervalDays"
+          />
+          <span>dias</span>
+        </label>
+
+        <label
+          *ngIf="formData.recurrenceType === 'Monthly'"
+          class="recurrence-number"
+          for="habit-month-day"
+        >
+          <span class="dialog-label">Dia do mês</span>
+          <input
+            id="habit-month-day"
+            type="number"
+            class="form-control theme-input dialog-input"
+            min="1"
+            max="31"
+            name="monthlyDay"
+            [(ngModel)]="monthlyDay"
+          />
+        </label>
+      </fieldset>
+
+      <fieldset class="reminder-picker">
+        <legend class="dialog-label">Lembrete</legend>
+
+        <label class="reminder-toggle">
+          <span>
+            <strong>Ativar lembrete</strong>
+            <small>Use um aviso leve para manter o hábito visível.</small>
+          </span>
+          <input
+            type="checkbox"
+            name="reminderEnabled"
+            [(ngModel)]="formData.reminderEnabled"
+            (ngModelChange)="onReminderEnabledChange()"
+          />
+        </label>
+
+        <div *ngIf="formData.reminderEnabled" class="reminder-grid">
+          <label class="dialog-control" for="habit-reminder-time">
+            <span class="material-icons dialog-control__icon" aria-hidden="true">schedule</span>
+            <input
+              id="habit-reminder-time"
+              type="time"
+              class="form-control theme-input dialog-input"
+              name="reminderTime"
+              [(ngModel)]="formData.reminderTime"
+            />
+          </label>
+
+          <label class="dialog-control" for="habit-reminder-type">
+            <span class="material-icons dialog-control__icon" aria-hidden="true">notifications</span>
+            <select
+              id="habit-reminder-type"
+              class="form-select theme-input dialog-input"
+              name="reminderType"
+              [(ngModel)]="formData.reminderType"
+            >
+              <option *ngFor="let option of reminderTypes" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+          </label>
+        </div>
+
+        <label
+          *ngIf="formData.reminderEnabled && formData.reminderType === 'Custom'"
+          class="dialog-field"
+          for="habit-reminder-message"
+        >
+          <span class="dialog-label">Mensagem personalizada</span>
+          <span class="dialog-control">
+            <span class="material-icons dialog-control__icon" aria-hidden="true">chat_bubble</span>
+            <input
+              id="habit-reminder-message"
+              type="text"
+              class="form-control theme-input dialog-input"
+              name="reminderMessage"
+              [(ngModel)]="formData.reminderMessage"
+              maxlength="140"
+              placeholder="Ex: Ler 10 páginas antes do café"
+            />
+          </span>
+        </label>
+      </fieldset>
+    </form>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button type="button" class="btn dialog-button dialog-button--ghost" (click)="onClose()">
+      Cancelar
+    </button>
+    <button
+      type="button"
+      class="btn dialog-button dialog-button--primary"
+      data-testid="habit-save-button"
+      [disabled]="habitForm.invalid || !formData.icon"
+      (click)="onSave()"
+    >
+      {{ data?.id ? 'Salvar' : 'Criar' }}
+    </button>
+  </mat-dialog-actions>
+</section>

@@ -1,0 +1,41 @@
+@use 'variables' as global;
+
+.body-wrapper {
+  min-height: calc(100dvh - 68px);
+  padding: clamp(0.75rem, 2vw, 1.25rem) 0 clamp(1.5rem, 4vw, 2.5rem);
+  background: global.$bg-color;
+  transition:
+    padding-left global.$transition-base,
+    background-color global.$transition-base;
+}
+
+:host-context(body.app-shell-authenticated) .body-wrapper {
+  padding-left: 252px;
+}
+
+:host-context(body.app-shell-authenticated.app-sidebar-collapsed) .body-wrapper {
+  padding-left: 84px;
+}
+
+@media (max-width: 991.98px) {
+  :host-context(body.app-shell-authenticated),
+  :host-context(body.app-shell-authenticated.app-sidebar-collapsed) {
+    .body-wrapper {
+      padding-left: 76px;
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  .body-wrapper {
+    min-height: calc(100dvh - 60px);
+    padding-top: 0.65rem;
+  }
+
+  :host-context(body.app-shell-authenticated),
+  :host-context(body.app-shell-authenticated.app-sidebar-collapsed) {
+    .body-wrapper {
+      padding-left: 68px;
+    }
+  }
+}

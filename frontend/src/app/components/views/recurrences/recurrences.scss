@@ -1,0 +1,221 @@
+@use 'variables' as global;
+
+:host {
+  display: block;
+}
+
+.recurrences-shell {
+  width: min(100%, 760px);
+  display: grid;
+  gap: 0.9rem;
+  padding-top: clamp(0.25rem, 1.6vw, 1rem);
+  color: global.$text-main;
+}
+
+.recurrences-hero,
+.bulk-panel,
+.pattern-card,
+.empty-state {
+  border-radius: global.$radius-lg;
+  background: global.$surface-low;
+  box-shadow: global.$shadow-sm;
+}
+
+.recurrences-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1.15rem, 4vw, 1.75rem);
+}
+
+.section-kicker {
+  margin: 0 0 0.35rem;
+  color: global.$text-subtle;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1,
+h2 {
+  margin: 0;
+  color: global.$text-main;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.recurrences-hero h1 {
+  font-size: clamp(1rem, 4vw, 1.72rem);
+  line-height: 0.98;
+}
+
+.recurrences-hero p:not(.section-kicker),
+.empty-state p {
+  margin: 0.6rem 0 0;
+  color: global.$text-muted;
+  font-weight: 650;
+}
+
+.pattern-count {
+  align-self: start;
+  border-radius: 999px;
+  background: global.$surface-high;
+  color: global.$text-muted;
+  padding: 0.42rem 0.7rem;
+  font-size: 0.82rem;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.bulk-panel,
+.pattern-card {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1rem;
+}
+
+.bulk-panel h2,
+.pattern-card h2 {
+  font-size: 1.1rem;
+}
+
+.recurrence-editor,
+.pattern-editor {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.weekday-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.weekday-choice {
+  min-height: 34px;
+  border: 1px solid global.$outline;
+  border-radius: 999px;
+  background: global.$surface-low;
+  color: global.$text-muted;
+  padding: 0 0.7rem;
+  font-size: 0.78rem;
+  font-weight: 800;
+}
+
+.weekday-choice.selected {
+  border-color: global.$primary-color;
+  background: global.$primary-color;
+  color: global.$on-primary;
+}
+
+.number-row {
+  display: inline-grid;
+  grid-template-columns: auto minmax(78px, 110px) auto;
+  align-items: center;
+  gap: 0.55rem;
+  color: global.$text-muted;
+  font-weight: 750;
+}
+
+.recurrence-primary,
+.recurrence-secondary,
+.pattern-edit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: 0;
+  border-radius: global.$radius-lg;
+  font-weight: 850;
+}
+
+.recurrence-primary {
+  min-height: 42px;
+  background: global.$primary-color;
+  color: global.$on-primary;
+}
+
+.recurrence-secondary,
+.pattern-edit {
+  min-height: 38px;
+  background: global.$surface-high;
+  color: global.$text-main;
+}
+
+.pattern-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.pattern-card__header,
+.pattern-editor__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+.habit-row-list {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.habit-row {
+  display: grid;
+  grid-template-columns: auto 36px minmax(0, 1fr);
+  align-items: center;
+  gap: 0.6rem;
+  color: global.$text-main;
+  font-weight: 750;
+}
+
+.habit-row__icon {
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+  border-radius: global.$radius-md;
+  background: global.$surface-high;
+}
+
+.habit-row__title {
+  overflow-wrap: anywhere;
+}
+
+.pattern-editor {
+  border-top: 1px solid global.$outline;
+  padding-top: 0.85rem;
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  gap: 0.65rem;
+  padding: clamp(2rem, 8vw, 3.5rem) 1rem;
+  text-align: center;
+}
+
+.empty-state__icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: global.$radius-lg;
+  background: color-mix(in srgb, global.$primary-color 14%, transparent);
+  color: global.$primary-color;
+  font-size: 1.65rem;
+}
+
+@media (max-width: 575.98px) {
+  .recurrences-shell {
+    padding-inline: 0.7rem;
+  }
+
+  .recurrences-hero,
+  .pattern-card__header,
+  .pattern-editor__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

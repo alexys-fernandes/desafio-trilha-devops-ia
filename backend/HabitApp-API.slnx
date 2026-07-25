@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="HabitApp.API/HabitApp.API.csproj" />
+  <Project Path="HabitApp.Application/HabitApp.Application.csproj" />
+  <Project Path="HabitApp.Domain.Services/HabitApp.Domain.Services.csproj" />
+  <Project Path="HabitApp.Domain.Services.Tests/HabitApp.Domain.Services.Tests.csproj" />
+  <Project Path="HabitApp.Domain/HabitApp.Domain.csproj" />
+  <Project Path="HabitApp.Infrastructure.Data/HabitApp.Infrastructure.Data.csproj" />
+  <Project Path="HabitApp.Infrastructure.IOC/HabitApp.Infrastructure.IOC.csproj" />
+</Solution>

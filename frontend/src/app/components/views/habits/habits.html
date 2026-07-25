@@ -1,0 +1,244 @@
+@let view = view$ | async;
+@let user = user$ | async;
+
+<div class="container habit-app-shell position-relative">
+  @if (loading$ | async) {
+    <div class="loading-overlay" aria-live="polite" aria-busy="true">
+      <div class="loading-card">
+        <div class="spinner-border" role="status" aria-hidden="true"></div>
+        <span>Sincronizando hábitos...</span>
+        <span class="visually-hidden">Carregando...</span>
+      </div>
+    </div>
+  }
+
+  @if (view; as habitsView) {
+    <section class="today-hero" aria-labelledby="today-title">
+      <div class="today-hero__copy">
+        <p class="section-kicker">Hoje</p>
+        <h1 id="today-title">
+          {{ greeting }}, {{ getFirstName(user?.name) }}
+          <span aria-hidden="true">👋</span>
+        </h1>
+        <p>{{ habitsView.motivationalMessage }}</p>
+      </div>
+
+      <div class="daily-progress-card" aria-label="Resumo do progresso diário">
+        <div class="daily-progress-card__header">
+          <span>Progresso diário</span>
+          <strong>{{ habitsView.completedToday }}/{{ habitsView.dueToday }}</strong>
+        </div>
+        <div
+          class="daily-progress"
+          role="progressbar"
+          [attr.aria-valuenow]="habitsView.completionPercent"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-label="Progresso de conclusão de hoje"
+        >
+          <span [style.width.%]="habitsView.completionPercent"></span>
+        </div>
+        <div class="daily-progress-card__meta">
+          <span>{{ habitsView.completionPercent }}% concluído</span>
+          <span>{{ habitsView.activeHabits }} ativos</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="habit-toolbar" aria-label="Ferramentas de hábitos">
+      <label class="search-field" for="habit-search">
+        <span class="material-icons search-icon" aria-hidden="true">search</span>
+        <input
+          id="habit-search"
+          data-testid="habit-search-input"
+          type="text"
+          class="form-control theme-input search-input"
+          placeholder="Buscar hábitos"
+          [formControl]="filterControl"
+        />
+      </label>
+
+      <button
+        type="button"
+        (click)="openNewHabitDialog()"
+        class="btn btn-habit-primary"
+        aria-label="Novo hábito"
+        title="Novo hábito"
+      >
+        <span class="material-icons" aria-hidden="true">add</span>
+      </button>
+    </section>
+
+    @if (habitsView.hasReminderSummary) {
+      <section class="reminder-summary" aria-label="Resumo de lembretes">
+        @if (habitsView.nextReminderLabel) {
+          <article class="stat-card reminder-summary__item">
+            <span class="material-icons" aria-hidden="true">schedule</span>
+            <div>
+              <span>Próximo lembrete</span>
+              <span>{{ habitsView.nextReminderLabel }}</span>
+            </div>
+          </article>
+        }
+
+        @if (habitsView.attentionCount) {
+          <article class="stat-card reminder-summary__item">
+            <span class="material-icons" aria-hidden="true">notification_important</span>
+            <div>
+              <span>{{ habitsView.attentionCount }} precisam de atenção: </span>
+              <span>{{ habitsView.attentionMessage }}</span>
+            </div>
+          </article>
+        }
+
+        @if (habitsView.smartReminderMessage) {
+          <article class="stat-card reminder-summary__item">
+            <span class="material-icons" aria-hidden="true">tips_and_updates</span>
+            <div>
+              <span>Incentivo inteligente: </span>
+              <span>{{ habitsView.smartReminderMessage }}</span>
+            </div>
+          </article>
+        }
+      </section>
+    }
+
+    <main class="today-section" aria-label="Conclusão de hábitos de hoje">
+      <div class="section-heading">
+        <div>
+          <p class="section-kicker">Conclusão rápida</p>
+          <h2>Hábitos de hoje</h2>
+        </div>
+        <span class="habit-count">{{ habitsView.activeHabits }} ativos</span>
+      </div>
+
+      <section class="habits-list" aria-label="Lista de hábitos">
+        @for (habit of habitsView.habits; track habit.id) {
+          <article
+            class="habit-card"
+            data-testid="habit-card"
+            role="button"
+            tabindex="0"
+            [class.habit-card--complete]="isHabitCompletedToday(habit)"
+            [attr.aria-pressed]="isHabitCompletedToday(habit)"
+            [attr.aria-label]="
+              (isHabitCompletedToday(habit) ? 'Marcar como incompleto: ' : 'Concluir: ') + habit.title
+            "
+            (click)="toggleToday(habit, $event)"
+            (keydown.enter)="toggleToday(habit, $event)"
+            (keydown.space)="toggleToday(habit, $event)"
+          >
+            <div class="habit-complete-indicator" aria-hidden="true">
+              <span class="material-icons">check</span>
+            </div>
+
+            <div class="habit-card__content">
+              <div class="habit-icon-wrapper" aria-hidden="true">{{ habit.icon }}</div>
+
+              <div class="habit-copy">
+                <h3 class="habit-name">{{ habit.title }}</h3>
+                <p class="habit-recurrence">{{ habit.recurrenceLabel }}</p>
+                <p class="habit-streak">
+                  <span class="material-icons" aria-hidden="true">local_fire_department</span>
+                  <span>Sequência de {{ habit.currentStreak }} dias</span>
+                </p>
+              </div>
+            </div>
+
+            <div class="habit-card__actions">
+              <div
+                class="week-strip"
+                role="list"
+                [attr.aria-label]="'Indicadores semanais de ' + habit.title"
+              >
+                @for (indicator of habit.weeklyIndicators; track indicator.date) {
+                  <span
+                    class="week-indicator"
+                    role="listitem"
+                    [class.done]="indicator.isCompleted"
+                    [class.due]="indicator.isDue"
+                    [class.today]="isDashboardDate(indicator.date, habitsView.dashboardDate)"
+                    [attr.aria-label]="
+                      indicator.dayOfWeek + ': '
+                      + (indicator.isCompleted ? 'concluído' : indicator.isDue ? 'aberto' : 'não programado')
+                    "
+                  >
+                    <span class="week-indicator__label" aria-hidden="true">
+                      {{ getWeekdayLabel(indicator.dayOfWeek) }}
+                    </span>
+                    <span class="week-indicator__dot" aria-hidden="true"></span>
+                  </span>
+                }
+              </div>
+            </div>
+
+            <button
+              type="button"
+              class="btn habit-menu-trigger"
+              [matMenuTriggerFor]="habitMenu"
+              (click)="$event.stopPropagation()"
+              (keydown.enter)="$event.stopPropagation()"
+              (keydown.space)="$event.stopPropagation()"
+              [attr.aria-label]="'Abrir ações de ' + habit.title"
+            >
+              <span class="material-icons" aria-hidden="true">more_horiz</span>
+            </button>
+
+            <mat-menu
+              #habitMenu="matMenu"
+              xPosition="before"
+              yPosition="below"
+              class="habit-card-menu"
+            >
+              <button mat-menu-item (click)="openNewHabitDialog(habit, $event)">
+                <span class="material-icons habit-menu-icon" aria-hidden="true">edit</span>
+                <span>Editar</span>
+              </button>
+              <button mat-menu-item (click)="archiveHabit(habit, $event)">
+                <span class="material-icons habit-menu-icon" aria-hidden="true">archive</span>
+                <span>Arquivar</span>
+              </button>
+              <button mat-menu-item class="habit-menu-danger" (click)="deleteHabit(habit, $event)">
+                <span class="material-icons habit-menu-icon" aria-hidden="true">delete</span>
+                <span>Excluir</span>
+              </button>
+            </mat-menu>
+          </article>
+        } @empty {
+          <div class="empty-state" data-testid="habits-empty-state">
+            <span class="material-icons empty-state__icon" aria-hidden="true">bolt</span>
+            <h2>Nenhum hábito ainda</h2>
+            <p>Crie um hábito e faça o dia valer.</p>
+            <button type="button" (click)="openNewHabitDialog()" class="btn btn-habit-secondary">
+              <span class="material-icons" aria-hidden="true">add</span>
+              <span>Criar hábito</span>
+            </button>
+          </div>
+        }
+      </section>
+    </main>
+
+    <section class="stats-section" aria-label="Estatísticas de hábitos">
+      <article class="stat-card">
+        <span class="stat-card__label">Sequência atual</span>
+        <strong>{{ habitsView.currentStreak }}</strong>
+        <span>melhor: {{ habitsView.longestStreak }} dias</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-card__label">Taxa de sucesso</span>
+        <strong>{{ habitsView.successRate }}%</strong>
+        <span>nesta semana</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-card__label">Total de conclusões</span>
+        <strong>{{ habitsView.totalCompletions }}</strong>
+        <span>marcações</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-card__label">Hábitos ativos</span>
+        <strong>{{ habitsView.activeHabits }}</strong>
+        <span>acompanhados</span>
+      </article>
+    </section>
+  }
+</div>

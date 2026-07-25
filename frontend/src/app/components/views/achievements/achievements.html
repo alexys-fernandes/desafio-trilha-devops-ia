@@ -1,0 +1,176 @@
+<div class="container achievements-shell">
+  @if (loading) {
+    <section class="achievements-loading" data-testid="achievements-loading" aria-live="polite">
+      <span class="spinner-border" aria-hidden="true"></span>
+      <span>Atualizando conquistas...</span>
+    </section>
+  } @else if (errorMessage) {
+    <section class="empty-state" data-testid="achievements-error">
+      <span class="material-icons empty-state__icon" aria-hidden="true">workspace_premium</span>
+      <h1>Conquistas indisponíveis</h1>
+      <p>{{ errorMessage }}</p>
+      <button type="button" class="btn achievements-secondary" (click)="loadAchievements()">
+        <span class="material-icons" aria-hidden="true">refresh</span>
+        <span>Tentar novamente</span>
+      </button>
+    </section>
+  } @else if (view; as achievementsView) {
+    <section class="achievements-hero" aria-labelledby="achievements-title">
+      <div>
+        <p class="section-kicker">Conquistas</p>
+        <h1 id="achievements-title">Progresso que merece atenção.</h1>
+        <p>Marcos e desafios são liberados a partir de conclusões programadas e sequências ativas.</p>
+      </div>
+      <div class="trophy-score" aria-label="Conquistas liberadas">
+        <span>{{ achievementsView.achievementSet.unlockedCount }}</span>
+        <small>de {{ achievementsView.achievementSet.totalCount }} liberadas</small>
+      </div>
+    </section>
+
+    @if (!hasAchievementData(achievementsView)) {
+      <section class="empty-state" data-testid="achievements-empty-state">
+        <span class="material-icons empty-state__icon" aria-hidden="true">workspace_premium</span>
+        <h2>Conclua hábitos programados para liberar conquistas.</h2>
+        <p>O acompanhamento de progresso aparece após as primeiras conclusões de hábitos.</p>
+      </section>
+    } @else {
+      <section class="achievement-overview" aria-label="Visão geral das conquistas">
+        <article class="metric-card">
+          <span class="metric-card__label">Pontuação de consistência</span>
+          <strong>{{ achievementsView.summary.consistencyScore }}</strong>
+          <small>índice de motivação</small>
+        </article>
+        <article class="metric-card">
+          <span class="metric-card__label">Liberadas</span>
+          <strong>{{ achievementsView.achievementSet.unlockedCount }}</strong>
+          <small>conquistas</small>
+        </article>
+        <article class="metric-card">
+          <span class="metric-card__label">Desafios mensais</span>
+          <strong>{{ achievementsView.summary.activeMonthlyChallenges }}</strong>
+          <small>ativos neste mês</small>
+        </article>
+      </section>
+
+      <section class="motivation-message-grid" aria-label="Análises motivacionais">
+        @for (message of achievementsView.summary.motivationalInsights; track message) {
+          <article class="motivation-message">
+            <span class="material-icons" aria-hidden="true">tips_and_updates</span>
+            <p>{{ message }}</p>
+          </article>
+        }
+      </section>
+
+      <section class="challenge-section" aria-labelledby="monthly-challenges-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Desafios mensais</p>
+            <h2 id="monthly-challenges-title">{{ achievementsView.monthlyChallenges.monthLabel }}</h2>
+          </div>
+        </div>
+
+        <div class="challenge-grid">
+          @for (challenge of achievementsView.monthlyChallenges.challenges; track challenge.id) {
+            <article class="challenge-card" data-testid="monthly-challenge-card">
+              <div class="challenge-card__header">
+                <span class="material-icons challenge-card__icon" aria-hidden="true">
+                  {{ challenge.icon }}
+                </span>
+                <div>
+                  <h3>{{ challenge.title }}</h3>
+                  <p>{{ challenge.description }}</p>
+                </div>
+              </div>
+
+              <div
+                class="progress-track"
+                role="progressbar"
+                [attr.aria-valuenow]="challenge.progressPercent"
+                aria-valuemin="0"
+                aria-valuemax="100"
+                [attr.aria-label]="challenge.title + ': progresso'"
+              >
+                <span [style.width.%]="challenge.progressPercent"></span>
+              </div>
+
+              <div class="challenge-card__meta">
+                <span>{{ getProgressLabel(challenge) }}</span>
+                <span>{{ challenge.progressPercent }}%</span>
+                <span>{{ challenge.message }}</span>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+
+      <section class="achievement-section" aria-labelledby="unlocked-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Liberadas</p>
+            <h2 id="unlocked-title">Já conquistadas</h2>
+          </div>
+        </div>
+
+        <div class="achievement-grid">
+          @for (achievement of achievementsView.unlockedAchievements; track achievement.id) {
+            <article class="achievement-card achievement-card--unlocked" data-testid="achievement-card">
+              <span class="material-icons achievement-card__icon" aria-hidden="true">
+                {{ achievement.icon }}
+              </span>
+              <div>
+                <span class="achievement-card__category">{{ achievement.category }}</span>
+                <h3>{{ achievement.title }}</h3>
+                <p>{{ achievement.description }}</p>
+              </div>
+              <span class="achievement-pill">Liberada</span>
+            </article>
+          } @empty {
+            <div class="empty-state empty-state--compact">
+              <span class="material-icons empty-state__icon" aria-hidden="true">emoji_events</span>
+              <h2>Nenhuma conquista liberada ainda.</h2>
+              <p>Conclua seu primeiro hábito programado para começar.</p>
+            </div>
+          }
+        </div>
+      </section>
+
+      <section class="achievement-section" aria-labelledby="progress-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Em andamento</p>
+            <h2 id="progress-title">Próximos marcos</h2>
+          </div>
+        </div>
+
+        <div class="achievement-grid">
+          @for (achievement of achievementsView.lockedAchievements; track achievement.id) {
+            <article class="achievement-card" data-testid="achievement-card">
+              <span class="material-icons achievement-card__icon" aria-hidden="true">
+                {{ achievement.icon }}
+              </span>
+              <div class="achievement-card__content">
+                <span class="achievement-card__category">{{ achievement.category }}</span>
+                <h3>{{ achievement.title }}</h3>
+                <p>{{ achievement.description }}</p>
+                <div
+                  class="progress-track"
+                  role="progressbar"
+                  [attr.aria-valuenow]="achievement.progressPercent"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  [attr.aria-label]="achievement.title + ': progresso'"
+                >
+                  <span [style.width.%]="achievement.progressPercent"></span>
+                </div>
+                <div class="achievement-card__meta">
+                  <span>{{ getProgressLabel(achievement) }}</span>
+                  <span>{{ achievement.progressPercent }}%</span>
+                </div>
+              </div>
+            </article>
+          }
+        </div>
+      </section>
+    }
+  }
+</div>

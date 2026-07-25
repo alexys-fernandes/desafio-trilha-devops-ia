@@ -1,0 +1,38 @@
+@use 'variables' as global;
+
+:host {
+  display: block;
+}
+
+.confirm-dialog {
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, global.$danger-container 38%, transparent),
+      transparent 54%
+    ),
+    global.$surface-low;
+
+  .dialog-icon {
+    border-color: color-mix(in srgb, global.$danger-color 38%, global.$outline);
+    background-color: global.$danger-container;
+    color: global.$danger-color;
+  }
+}
+
+.confirm-message {
+  margin: 0;
+  padding: 1rem;
+  border: 1px solid color-mix(in srgb, global.$danger-color 26%, global.$outline);
+  border-radius: global.$radius-lg;
+  background-color: color-mix(in srgb, global.$danger-container 36%, global.$surface-low);
+  color: global.$text-main;
+  font-size: 0.98rem;
+  font-weight: 650;
+  line-height: 1.6;
+
+  strong {
+    color: global.$danger-color;
+    font-weight: 900;
+  }
+}

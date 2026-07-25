@@ -1,0 +1,345 @@
+@use 'variables' as global;
+
+:host {
+  display: block;
+}
+
+.achievements-shell {
+  width: min(100%, 980px);
+  display: grid;
+  gap: 0.9rem;
+  padding-top: clamp(0.25rem, 1.6vw, 1rem);
+  padding-bottom: clamp(1.5rem, 5vw, 4rem);
+  color: global.$text-main;
+}
+
+.achievements-hero,
+.metric-card,
+.motivation-message,
+.challenge-card,
+.achievement-card,
+.empty-state,
+.achievements-loading {
+  border-radius: global.$radius-lg;
+  background: global.$surface-low;
+  box-shadow: global.$shadow-sm;
+}
+
+.achievements-hero {
+  display: grid;
+  gap: 1.1rem;
+  align-items: end;
+  padding: clamp(1.15rem, 4vw, 1.75rem);
+}
+
+.section-kicker {
+  margin: 0 0 0.35rem;
+  color: global.$text-subtle;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  color: global.$text-main;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.achievements-hero h1,
+.empty-state h1 {
+  max-width: 13ch;
+  font-size: clamp(1rem, 4vw, 1.72rem);
+  line-height: 0.98;
+}
+
+.achievements-hero p:not(.section-kicker),
+.challenge-card p,
+.achievement-card p,
+.empty-state p {
+  margin: 0.58rem 0 0;
+  color: global.$text-muted;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
+.trophy-score {
+  width: min(100%, 180px);
+  display: grid;
+  gap: 0.15rem;
+  border-radius: global.$radius-lg;
+  background: color-mix(in srgb, global.$primary-color 12%, global.$surface-high);
+  padding: 1rem;
+}
+
+.trophy-score span {
+  color: global.$primary-color;
+  font-size: clamp(2.3rem, 8vw, 3.2rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.trophy-score small,
+.metric-card small,
+.challenge-card__meta,
+.achievement-card__meta {
+  color: global.$text-muted;
+  font-size: 0.78rem;
+  font-weight: 760;
+}
+
+.achievement-overview,
+.motivation-message-grid,
+.challenge-grid,
+.achievement-grid {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.achievement-overview {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.metric-card {
+  display: grid;
+  gap: 0.18rem;
+  padding: 0.95rem;
+}
+
+.metric-card__label {
+  color: global.$text-subtle;
+  font-size: 0.7rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.metric-card strong {
+  color: global.$text-main;
+  font-size: clamp(1.7rem, 5vw, 2.35rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.motivation-message-grid {
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+}
+
+.motivation-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  padding: 0.85rem;
+}
+
+.motivation-message .material-icons {
+  color: global.$primary-color;
+  font-size: 1.2rem;
+}
+
+.motivation-message p {
+  margin: 0;
+  color: global.$text-main;
+  font-size: 0.9rem;
+  font-weight: 760;
+  line-height: 1.35;
+}
+
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.9rem;
+  margin: 0.2rem 0 0.75rem;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.15rem, 3vw, 1.42rem);
+}
+
+.challenge-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.challenge-card,
+.achievement-card {
+  min-width: 0;
+  padding: 0.95rem;
+}
+
+.challenge-card {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.challenge-card__header {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.challenge-card__icon,
+.achievement-card__icon {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: global.$radius-lg;
+  background: global.$surface-high;
+  color: global.$primary-color;
+  font-size: 1.35rem;
+}
+
+.progress-track {
+  height: 0.55rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, global.$outline 56%, transparent);
+}
+
+.progress-track span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: global.$primary-color;
+  transition: width global.$transition-base;
+}
+
+.challenge-card__meta,
+.achievement-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.challenge-card__meta span,
+.achievement-card__meta span,
+.achievement-pill {
+  border-radius: 999px;
+  background: global.$surface-high;
+  padding: 0.32rem 0.52rem;
+}
+
+.achievement-grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.achievement-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.achievement-card--unlocked {
+  background: global.$success-container;
+}
+
+.achievement-card__content {
+  min-width: 0;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.achievement-card__category {
+  color: global.$text-subtle;
+  font-size: 0.68rem;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.achievement-card h3,
+.challenge-card h3 {
+  font-size: 1rem;
+  line-height: 1.18;
+  overflow-wrap: anywhere;
+}
+
+.achievement-pill {
+  margin-left: auto;
+  color: global.$primary-color;
+  font-size: 0.72rem;
+  font-weight: 850;
+  white-space: nowrap;
+}
+
+.empty-state,
+.achievements-loading {
+  display: grid;
+  place-items: center;
+  gap: 0.7rem;
+  padding: clamp(2rem, 8vw, 3.5rem) 1rem;
+  text-align: center;
+}
+
+.empty-state--compact {
+  grid-column: 1 / -1;
+  padding-block: 2rem;
+}
+
+.empty-state__icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: global.$radius-lg;
+  background: color-mix(in srgb, global.$primary-color 14%, transparent);
+  color: global.$primary-color;
+  font-size: 1.65rem;
+}
+
+.achievements-secondary {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  border: 0;
+  border-radius: global.$radius-lg;
+  background: global.$text-main;
+  color: global.$surface-low;
+  padding: 0.65rem 0.95rem;
+  font-weight: 850;
+}
+
+.achievements-loading {
+  min-height: 260px;
+  color: global.$text-muted;
+  font-weight: 850;
+}
+
+.achievements-loading .spinner-border {
+  width: 1.4rem;
+  height: 1.4rem;
+  color: global.$primary-color;
+}
+
+@media (min-width: 768px) {
+  .achievements-hero {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .achievements-shell {
+    padding-inline: 0.7rem;
+  }
+
+  .achievement-overview {
+    grid-template-columns: 1fr;
+  }
+
+  .achievement-card {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .achievement-pill {
+    margin-left: 0;
+    width: fit-content;
+  }
+}

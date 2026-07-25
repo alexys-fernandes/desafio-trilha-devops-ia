@@ -1,0 +1,22 @@
+@use 'variables' as global;
+
+:host {
+  display: block;
+}
+
+.user-dialog {
+  .dialog-icon {
+    background-color: color-mix(in srgb, global.$primary-container 70%, global.$surface-high);
+  }
+}
+
+.dialog-form {
+  gap: 0.95rem;
+}
+
+.dialog-help {
+  padding: 0.65rem 0.75rem;
+  border: 1px solid global.$outline;
+  border-radius: global.$radius-md;
+  background-color: color-mix(in srgb, global.$surface-high 78%, transparent);
+}

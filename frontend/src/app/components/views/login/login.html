@@ -1,0 +1,153 @@
+<section class="login-container" aria-labelledby="auth-title">
+  <div class="login-shell">
+    <aside class="login-story" aria-label="Aplicativo de hábitos">
+      <div class="brand-lockup">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="app-logo.svg" alt="" class="brand-logo" />
+        </span>
+        <span class="brand-copy">
+          <span class="brand-kicker">Hábitos</span>
+          <span class="brand-title">Rotina em progresso</span>
+        </span>
+      </div>
+
+      <div class="story-copy">
+        <p class="story-eyebrow">Área segura</p>
+        <h1>Acesse seus hábitos com clareza.</h1>
+        <p>
+          Entre ou crie sua conta para continuar acompanhando sua rotina diária em uma
+          experiência visual mais focada.
+        </p>
+      </div>
+    </aside>
+
+    <div class="login-card">
+      <div class="auth-header">
+        <p class="auth-kicker">{{ isLoginMode ? 'Bem-vindo de volta' : 'Comece agora' }}</p>
+        <h2 id="auth-title">{{ isLoginMode ? 'Entrar' : 'Criar conta' }}</h2>
+        <p>
+          {{
+            isLoginMode
+              ? 'Continue sua rotina de hábitos.'
+              : 'Configure seu acesso em poucos segundos.'
+          }}
+        </p>
+      </div>
+
+      <div class="auth-tabs" role="tablist" aria-label="Modo de autenticação">
+        <button
+          type="button"
+          class="tab-btn"
+          role="tab"
+          id="login-tab"
+          aria-controls="auth-form"
+          [class.active]="isLoginMode"
+          [attr.aria-selected]="isLoginMode"
+          (click)="toggleMode(true)"
+        >
+          Entrar
+        </button>
+        <button
+          type="button"
+          class="tab-btn"
+          role="tab"
+          id="register-tab"
+          aria-controls="auth-form"
+          [class.active]="!isLoginMode"
+          [attr.aria-selected]="!isLoginMode"
+          (click)="toggleMode(false)"
+        >
+          Criar conta
+        </button>
+      </div>
+
+      <form id="auth-form" class="auth-form" (ngSubmit)="onSubmit()" #authForm="ngForm">
+        @if (!isLoginMode) {
+          <div class="form-field">
+            <label for="auth-name">Nome completo</label>
+            <div class="field-control">
+              <span class="material-icons field-icon" aria-hidden="true">badge</span>
+              <input
+                id="auth-name"
+                data-testid="auth-name-input"
+                type="text"
+                class="form-control theme-input auth-input"
+                placeholder="Seu nome"
+                autocomplete="name"
+                [(ngModel)]="formData.name"
+                name="name"
+                required
+                #nameField="ngModel"
+                [attr.aria-invalid]="nameField.invalid && nameField.touched"
+              />
+            </div>
+            @if (nameField.invalid && nameField.touched) {
+              <p class="field-error">Informe seu nome completo.</p>
+            }
+          </div>
+        }
+
+        <div class="form-field">
+          <label for="auth-email">E-mail</label>
+          <div class="field-control">
+            <span class="material-icons field-icon" aria-hidden="true">alternate_email</span>
+            <input
+              id="auth-email"
+              data-testid="auth-email-input"
+              type="email"
+              class="form-control theme-input auth-input"
+              placeholder="exemplo@email.com"
+              autocomplete="email"
+              [(ngModel)]="formData.email"
+              name="email"
+              required
+              email
+              #emailField="ngModel"
+              [attr.aria-invalid]="emailField.invalid && emailField.touched"
+            />
+          </div>
+          @if (emailField.invalid && emailField.touched) {
+            <p class="field-error">Informe um e-mail válido.</p>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="auth-password">Senha</label>
+          <div class="field-control">
+            <span class="material-icons field-icon" aria-hidden="true">lock</span>
+            <input
+              id="auth-password"
+              data-testid="auth-password-input"
+              type="password"
+              class="form-control theme-input auth-input"
+              placeholder="Sua senha"
+              [attr.autocomplete]="isLoginMode ? 'current-password' : 'new-password'"
+              [(ngModel)]="formData.password"
+              name="password"
+              required
+              #passwordField="ngModel"
+              [attr.aria-invalid]="passwordField.invalid && passwordField.touched"
+            />
+          </div>
+          @if (passwordField.invalid && passwordField.touched) {
+            <p class="field-error">Informe sua senha.</p>
+          }
+        </div>
+
+        <button
+          type="submit"
+          class="auth-submit"
+          [disabled]="authForm.invalid || (isLoading$ | async)"
+        >
+          @if (isLoading$ | async) {
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span>Processando...</span>
+          } @else {
+            <span>{{ isLoginMode ? 'Entrar' : 'Criar conta' }}</span>
+            <span class="material-icons submit-icon" aria-hidden="true">arrow_forward</span>
+          }
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

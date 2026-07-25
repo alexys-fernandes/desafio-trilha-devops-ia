@@ -1,0 +1,526 @@
+@use 'variables' as global;
+
+:host {
+  display: block;
+}
+
+.habit-app-shell {
+  width: min(100%, 760px);
+  display: grid;
+  gap: 0.9rem;
+  padding-top: clamp(0.25rem, 1.6vw, 1rem);
+  padding-bottom: clamp(1.5rem, 5vw, 4rem);
+  color: global.$text-main;
+}
+
+.today-hero {
+  display: grid;
+  gap: 1.2rem;
+  border-radius: global.$radius-lg;
+  background: global.$surface-low;
+  box-shadow: global.$shadow-md;
+  padding: clamp(1.15rem, 4vw, 1.75rem);
+}
+
+.section-kicker {
+  margin: 0 0 0.35rem;
+  color: global.$text-subtle;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.today-hero h1,
+.section-heading h2,
+.empty-state h2 {
+  margin: 0;
+  color: global.$text-main;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.today-hero h1 {
+  font-size: clamp(1rem, 4vw, 1.72rem);
+  line-height: 0.98;
+}
+
+.today-hero p:not(.section-kicker) {
+  margin: 0.8rem 0 0;
+  color: global.$text-muted;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.daily-progress-card {
+  display: grid;
+  gap: 0.65rem;
+  border-radius: global.$radius-lg;
+  background: color-mix(in srgb, global.$surface-high 58%, global.$surface-low);
+  padding: 0.85rem;
+}
+
+.daily-progress-card__header,
+.daily-progress-card__meta,
+.section-heading,
+.habit-card__content,
+.habit-streak {
+  display: flex;
+  align-items: center;
+}
+
+.daily-progress-card__header,
+.daily-progress-card__meta,
+.section-heading {
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.daily-progress-card__header span,
+.daily-progress-card__meta,
+.habit-count,
+.stat-card span {
+  color: global.$text-muted;
+  font-size: 0.82rem;
+  font-weight: 750;
+}
+
+.daily-progress-card__header strong {
+  color: global.$text-main;
+  font-size: 1.65rem;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.daily-progress {
+  height: 0.7rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, global.$outline 52%, transparent);
+}
+
+.daily-progress span {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: global.$primary-color;
+  transition: width global.$transition-base;
+}
+
+.habit-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 48px;
+  gap: 0.6rem;
+}
+
+.search-field {
+  position: relative;
+  min-width: 0;
+  display: block;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  z-index: 1;
+  color: global.$text-subtle;
+  font-size: 1.2rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+  transition: color global.$transition-fast;
+}
+
+.search-input {
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: 999px;
+  padding-left: 2.85rem;
+  box-shadow: global.$shadow-sm;
+  font-weight: 700;
+}
+
+.search-field:focus-within .search-icon {
+  color: global.$primary-color;
+}
+
+.btn-habit-primary,
+.btn-habit-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  font-weight: 850;
+  transition: all global.$transition-fast;
+}
+
+.btn-habit-primary {
+  width: 48px;
+  min-height: 48px;
+  border-radius: 50%;
+  background: global.$primary-color;
+  color: global.$on-primary;
+  box-shadow: global.$shadow-md;
+}
+
+.btn-habit-primary:hover {
+  background: var(--app-primary-hover);
+  color: global.$on-primary;
+  transform: translateY(-1px);
+}
+
+.today-section {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.section-heading {
+  padding: 0.15rem 0.1rem 0;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.3rem, 3vw, 1.65rem);
+  line-height: 1.05;
+}
+
+.habit-count {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: global.$surface-low;
+  padding: 0.42rem 0.7rem;
+  box-shadow: global.$shadow-sm;
+  white-space: nowrap;
+}
+
+.habits-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.habit-card {
+  position: relative;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.85rem;
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: global.$radius-lg;
+  background: global.$surface-low;
+  box-shadow: global.$shadow-sm;
+  padding: 0.9rem 11.15rem 0.9rem 0.9rem;
+  cursor: pointer;
+  transition: all global.$transition-base;
+}
+
+.habit-card:hover,
+.habit-card:focus-visible {
+  border-color: color-mix(in srgb, global.$primary-color 24%, transparent);
+  box-shadow: global.$shadow-md;
+  transform: translateY(-2px);
+  outline: 0;
+}
+
+.habit-card:active {
+  transform: scale(0.992);
+}
+
+.habit-card--complete {
+  background: global.$success-container;
+}
+
+.habit-complete-indicator {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid global.$outline;
+  background: global.$bg-color;
+  color: transparent;
+  transition: all global.$transition-base;
+}
+
+.habit-complete-indicator .material-icons {
+  font-size: 1.15rem;
+}
+
+.habit-card--complete .habit-complete-indicator {
+  background: global.$primary-color;
+  color: global.$on-primary;
+  transform: scale(1.08);
+  animation: checkPop 240ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.habit-card__content {
+  min-width: 0;
+  gap: 0.8rem;
+}
+
+.habit-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border-radius: global.$radius-lg;
+  background: color-mix(in srgb, global.$surface-high 72%, global.$surface-low);
+  font-size: 1.35rem;
+}
+
+.habit-copy {
+  min-width: 0;
+}
+
+.habit-name {
+  margin: 0;
+  color: global.$text-main;
+  font-size: clamp(1rem, 2.2vw, 1.15rem);
+  font-weight: 850;
+  line-height: 1.15;
+  overflow-wrap: anywhere;
+}
+
+.habit-streak {
+  gap: 0.25rem;
+  margin: 0.2rem 0 0;
+  color: global.$text-muted;
+  font-size: 0.8rem;
+  font-weight: 750;
+}
+
+.habit-recurrence {
+  margin: 0.24rem 0 0;
+  color: global.$text-subtle;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+.habit-streak .material-icons {
+  color: global.$primary-color;
+  font-size: 0.95rem;
+}
+
+.habit-card__actions {
+  position: absolute;
+  right: 0.7rem;
+  bottom: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.week-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.week-indicator {
+  width: 1.15rem;
+  height: 1.35rem;
+  display: grid;
+  place-items: center;
+  gap: 0.12rem;
+}
+
+.week-indicator__label {
+  color: global.$text-subtle;
+  font-size: 0.56rem;
+  font-weight: 800;
+}
+
+.week-indicator__dot {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-radius: 999px;
+  background: global.$outline;
+  transition: all global.$transition-base;
+}
+
+.week-indicator.done .week-indicator__dot {
+  background: global.$primary-color;
+  transform: scale(1.2);
+}
+
+.week-indicator.today .week-indicator__dot {
+  box-shadow: 0 0 0 4px color-mix(in srgb, global.$primary-color 16%, transparent);
+}
+
+.habit-menu-trigger {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: global.$text-muted;
+  transition: all global.$transition-fast;
+}
+
+.habit-menu-trigger:hover,
+.habit-menu-trigger[aria-expanded='true'] {
+  background: global.$surface-high;
+  color: global.$text-main;
+  transform: scale(1.04);
+}
+
+.stats-section {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.95rem 0.65rem;
+  display: grid;
+}
+
+.stat-card {
+  min-width: 0;
+  display: grid;
+  gap: 0.2rem;
+  border-radius: global.$radius-lg;
+  background: global.$surface-low;
+  box-shadow: global.$shadow-sm;
+  padding: 0.9rem;
+}
+
+.reminder-summary {
+  display: grid;
+  gap: 5px;
+}
+
+.reminder-summary__item {
+  display: flex;
+  align-items: center;
+}
+
+.stat-card__label {
+  margin-bottom: 0.15rem;
+}
+
+.stat-card strong {
+  color: global.$text-main;
+  font-size: clamp(1.45rem, 6vw, 2rem);
+  font-weight: 850;
+  line-height: 1;
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  gap: 0.7rem;
+  border-radius: global.$radius-lg;
+  background: global.$surface-low;
+  box-shadow: global.$shadow-sm;
+  padding: clamp(2rem, 8vw, 3.5rem) 1rem;
+  text-align: center;
+}
+
+.empty-state__icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: global.$radius-lg;
+  background: color-mix(in srgb, global.$primary-color 14%, transparent);
+  color: global.$primary-color;
+  font-size: 1.65rem;
+}
+
+.empty-state h2 {
+  font-size: clamp(1.35rem, 4vw, 1.8rem);
+}
+
+.empty-state p {
+  margin: 0;
+  color: global.$text-muted;
+  font-weight: 650;
+}
+
+.btn-habit-secondary {
+  min-height: 46px;
+  gap: 0.4rem;
+  border-radius: global.$radius-lg;
+  background: global.$text-main;
+  color: global.$surface-low;
+  padding: 0.7rem 1rem;
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: start center;
+  padding-top: clamp(6rem, 20vw, 10rem);
+  border-radius: global.$radius-lg;
+  background: global.$surface-overlay;
+  backdrop-filter: blur(10px);
+  pointer-events: auto;
+}
+
+.loading-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  border-radius: global.$radius-lg;
+  background: global.$surface-low;
+  color: global.$text-main;
+  padding: 0.8rem 1rem;
+  box-shadow: global.$shadow-lg;
+  font-weight: 800;
+}
+
+.loading-card .spinner-border {
+  width: 1.35rem;
+  height: 1.35rem;
+  color: global.$primary-color;
+}
+
+@media (min-width: 768px) {
+  .today-hero {
+    grid-template-columns: minmax(0, 1fr) 270px;
+    align-items: end;
+  }
+
+}
+
+@media (max-width: 575.98px) {
+  .habit-app-shell {
+    gap: 0.75rem;
+    padding-inline: 0.7rem;
+  }
+
+  .habit-card {
+    padding: 0.9rem 3.7rem 3.25rem 0.9rem;
+  }
+
+  .habit-icon-wrapper {
+    width: 44px;
+    height: 44px;
+  }
+
+  .habit-card__actions {
+    right: 0.55rem;
+    bottom: 0.55rem;
+  }
+
+  .habit-menu-trigger {
+    right: 0.55rem;
+  }
+}
+
+@keyframes checkPop {
+  0% {
+    transform: scale(0.72);
+  }
+  100% {
+    transform: scale(1.08);
+  }
+}

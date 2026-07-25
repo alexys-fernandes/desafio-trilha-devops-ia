@@ -1,0 +1,322 @@
+@use 'variables' as global;
+
+:host {
+  display: block;
+}
+
+.notifications-shell {
+  width: min(100%, 860px);
+  display: grid;
+  gap: 0.9rem;
+  padding-top: clamp(0.25rem, 1.6vw, 1rem);
+  padding-bottom: clamp(1.5rem, 5vw, 4rem);
+  color: global.$text-main;
+}
+
+.notifications-hero,
+.settings-panel,
+.preview-panel,
+.notifications-loading,
+.empty-state {
+  border-radius: global.$radius-lg;
+  background: global.$surface-low;
+  box-shadow: global.$shadow-sm;
+}
+
+.notifications-hero {
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1.15rem, 4vw, 1.75rem);
+}
+
+.section-kicker {
+  margin: 0 0 0.35rem;
+  color: global.$text-subtle;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.notifications-hero h1,
+.settings-panel h2,
+.preview-panel h2,
+.empty-state h1 {
+  margin: 0;
+  color: global.$text-main;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.notifications-hero h1,
+.empty-state h1 {
+  font-size: clamp(1rem, 4vw, 1.72rem);
+  line-height: 0.98;
+}
+
+.notifications-hero p:not(.section-kicker),
+.empty-state p {
+  margin: 0.65rem 0 0;
+  color: global.$text-muted;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.next-reminder-pill {
+  min-width: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 999px;
+  background: global.$surface-high;
+  color: global.$text-main;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.84rem;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.next-reminder-pill .material-icons {
+  flex: 0 0 auto;
+  color: global.$primary-color;
+  font-size: 1rem;
+}
+
+.settings-layout {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.settings-panel,
+.preview-panel {
+  min-width: 0;
+  display: grid;
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 1.25rem);
+}
+
+.settings-panel__header,
+.preview-panel__header,
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.settings-panel__header .material-icons {
+  color: global.$primary-color;
+}
+
+.settings-panel h2,
+.preview-panel h2 {
+  font-size: clamp(1.08rem, 3vw, 1.35rem);
+  line-height: 1.1;
+}
+
+.toggle-row {
+  min-width: 0;
+  border: 1px solid global.$outline;
+  border-radius: global.$radius-lg;
+  background: color-mix(in srgb, global.$surface-high 82%, global.$surface-low);
+  padding: 0.85rem;
+}
+
+.toggle-row span {
+  min-width: 0;
+  display: grid;
+  gap: 0.18rem;
+}
+
+.toggle-row strong {
+  color: global.$text-main;
+  font-size: 0.92rem;
+  line-height: 1.2;
+}
+
+.toggle-row small,
+.time-field span,
+.preview-panel__header span,
+.preview-stat-grid span {
+  color: global.$text-muted;
+  font-size: 0.78rem;
+  font-weight: 750;
+}
+
+.toggle-row input[type='checkbox'] {
+  width: 1.25rem;
+  height: 1.25rem;
+  flex: 0 0 auto;
+  accent-color: global.$primary-color;
+}
+
+.time-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+}
+
+.time-field {
+  min-width: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.time-field .theme-input {
+  min-height: 44px;
+  border: 1px solid global.$outline;
+  border-radius: global.$radius-md;
+  background-color: global.$surface-high;
+  color: global.$text-main;
+  font-weight: 750;
+}
+
+.preview-panel__header span {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  background: global.$surface-high;
+  padding: 0.35rem 0.65rem;
+}
+
+.preview-stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.6rem;
+}
+
+.preview-stat-grid article {
+  min-width: 0;
+  display: grid;
+  gap: 0.15rem;
+  border-radius: global.$radius-md;
+  background: global.$surface-high;
+  padding: 0.75rem;
+}
+
+.preview-stat-grid strong {
+  color: global.$text-main;
+  font-size: 1.35rem;
+  font-weight: 850;
+  line-height: 1;
+}
+
+.motivation-list {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.motivation-list p {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin: 0;
+  color: global.$text-muted;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
+.motivation-list .material-icons {
+  flex: 0 0 auto;
+  color: global.$primary-color;
+  font-size: 1rem;
+  transform: translateY(0.08rem);
+}
+
+.settings-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.6rem;
+}
+
+.notifications-primary,
+.notifications-secondary {
+  min-height: 44px;
+  border: 0;
+  border-radius: global.$radius-lg;
+  padding: 0.65rem 1rem;
+  font-weight: 850;
+}
+
+.notifications-primary {
+  background: global.$primary-color;
+  color: global.$on-primary;
+}
+
+.notifications-primary:disabled {
+  opacity: 0.65;
+}
+
+.notifications-secondary {
+  background: global.$surface-low;
+  color: global.$text-main;
+  box-shadow: global.$shadow-sm;
+}
+
+.notifications-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  justify-content: center;
+  padding: 1rem;
+  color: global.$text-main;
+  font-weight: 800;
+}
+
+.notifications-loading .spinner-border {
+  width: 1.25rem;
+  height: 1.25rem;
+  color: global.$primary-color;
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  gap: 0.7rem;
+  padding: clamp(2rem, 8vw, 3.5rem) 1rem;
+  text-align: center;
+}
+
+.empty-state__icon {
+  width: 54px;
+  height: 54px;
+  display: grid;
+  place-items: center;
+  border-radius: global.$radius-lg;
+  background: color-mix(in srgb, global.$primary-color 14%, transparent);
+  color: global.$primary-color;
+  font-size: 1.65rem;
+}
+
+@media (min-width: 768px) {
+  .notifications-hero {
+    grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+    align-items: end;
+  }
+
+  .settings-layout {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .settings-panel:first-child,
+  .preview-panel,
+  .settings-actions {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .notifications-shell {
+    padding-inline: 0.7rem;
+  }
+
+  .time-grid,
+  .preview-stat-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-actions {
+    flex-direction: column-reverse;
+  }
+}
