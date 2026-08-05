@@ -101,6 +101,7 @@ describe('Header', () => {
       'Conquistas',
       'Recorrências',
       'Notificações',
+      'Coach',
     ]);
   });
 
