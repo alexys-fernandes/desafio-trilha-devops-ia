@@ -1,0 +1,5 @@
+# Test artifacts
+backend/TestResults/
+frontend/coverage/
+frontend/.vitest/
+frontend/.angular/cache/
