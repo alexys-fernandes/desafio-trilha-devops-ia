@@ -17,13 +17,12 @@ public class AICoachApplicationServiceTests
             })
             .Build();
 
-        var service = new AICoachApplicationService(configuration, new HttpClient());
+        var service = new AICoachApplicationService(configuration);
 
-        var result = await service.GetCoachResponseAsync(new AICoachRequestDto
+        var result = await service.SendMessageAsync(new AICoachRequestDto
         {
             UserId = 1,
-            Message = "Estou desanimado",
-            ContextSummary = "Quero voltar a estudar todos os dias"
+            Message = "Estou desanimado"
         });
 
         Assert.False(string.IsNullOrWhiteSpace(result.Response));
