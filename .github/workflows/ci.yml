@@ -20,18 +20,47 @@ jobs:
         with:
           dotnet-version: 10.0.x
 
+      - name: Install ReportGenerator
+        run: dotnet tool install --tool-path "$HOME/.dotnet-tools" dotnet-reportgenerator-globaltool
+
       - name: Restore dependencies
         run: dotnet restore ./HabitApp-API.slnx
 
-      - name: Run backend tests with coverage
-        run: dotnet test ./HabitApp.Domain.Services.Tests/HabitApp.Domain.Services.Tests.csproj --collect:"XPlat Code Coverage" --results-directory ./TestResults -p:CollectCoverage=true -p:CoverletOutputFormat=cobertura
+      - name: Run backend tests and generate coverage report
+        run: |
+          set -euo pipefail
+
+          TIMESTAMP=$(date '+%Y-%m-%d_%H-%M-%S')
+          RESULTS_DIR="$(pwd)/HabitApp.TestResults/$TIMESTAMP"
+          mkdir -p "$RESULTS_DIR"
+
+          dotnet test ./HabitApp.Domain.Services.Tests/HabitApp.Domain.Services.Tests.csproj \
+            --collect:"XPlat Code Coverage" \
+            --results-directory "$RESULTS_DIR" \
+            -p:CollectCoverage=true \
+            -p:CoverletOutputFormat=cobertura
+
+          COVERAGE_XML=$(find "$RESULTS_DIR" -type f -name 'coverage.cobertura.xml' | head -n 1)
+          if [ -z "$COVERAGE_XML" ]; then
+            echo "Coverage XML not found in $RESULTS_DIR"
+            exit 1
+          fi
+
+          cp "$COVERAGE_XML" "$RESULTS_DIR/coverage.cobertura.xml"
+
+          find "$RESULTS_DIR" -mindepth 1 -maxdepth 1 -type d -name '*' ! -name 'html' -exec rm -rf {} +
+
+          "$HOME/.dotnet-tools/reportgenerator" \
+            -reports:"$RESULTS_DIR/coverage.cobertura.xml" \
+            -targetdir:"$RESULTS_DIR/html" \
+            -reporttypes:Html
 
       - name: Upload backend coverage artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: backend-coverage
-          path: backend/TestResults
+          path: backend/HabitApp.TestResults
 
   frontend-tests:
     name: Frontend tests

@@ -1,5 +1,5 @@
 # Test artifacts
-backend/TestResults/
+backend/HabitApp.TestResults/
 frontend/coverage/
 frontend/.vitest/
 frontend/.angular/cache/

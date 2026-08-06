@@ -14,12 +14,14 @@ O projeto foi organizado em duas partes principais:
 ## Tecnologias
 
 ### Backend
+
 - .NET 10
 - ASP.NET Core Web API
 - Entity Framework Core / SQLite
 - Swagger / OpenAPI
 
 ### Frontend
+
 - Angular 21
 - TypeScript
 - RxJS
@@ -126,6 +128,30 @@ dotnet test ./HabitApp.Domain.Services.Tests/HabitApp.Domain.Services.Tests.cspr
 cd frontend
 npm run test:ci
 ```
+
+## Visualizando os resultados dos testes
+
+Os arquivos gerados pelos testes ficam organizados em pastas específicas para facilitar a análise.
+
+### Resultados locais
+
+- Backend: os relatórios de cobertura do .NET são salvos em [backend/HabitApp.TestResults](backend/HabitApp.TestResults), com uma subpasta por execução no formato `AAAA-MM-DD_HH-MM-SS`.
+- Frontend: a cobertura do Angular fica em [frontend/coverage](frontend/coverage).
+
+### Como abrir os arquivos
+
+1. Entre na pasta do backend ou frontend conforme o tipo de resultado desejado.
+2. Abra a subpasta com a data/hora da execução.
+3. Veja o arquivo XML de cobertura do backend, por exemplo [backend/HabitApp.TestResults](backend/HabitApp.TestResults), ou abra o relatório HTML do backend em [backend/HabitApp.TestResults](backend/HabitApp.TestResults) dentro da pasta `html` da execução mais recente. Para o frontend, abra o relatório HTML em [frontend/coverage](frontend/coverage).
+
+### Na pipeline do GitHub Actions
+
+A cada execução da pipeline, os artefatos são publicados no GitHub Actions para download. Para visualizar:
+
+1. Acesse a aba Actions do repositório.
+2. Abra a execução desejada.
+3. No final da página, baixe o artefato `backend-coverage` ou `frontend-coverage`.
+4. Extraia o arquivo e abra o relatório HTML ou o XML correspondente.
 
 ## CI/CD
 
