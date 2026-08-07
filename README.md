@@ -1,6 +1,7 @@
 # Desafio Trilha DevOps IA
 
 [![CI](https://github.com/alexys-fernandes/desafio-trilha-devops-ia/actions/workflows/ci.yml/badge.svg)](https://github.com/alexys-fernandes/desafio-trilha-devops-ia/actions/workflows/ci.yml)
+[![Vercel Frontend](https://img.shields.io/badge/Vercel-Live%20App-000000?style=flat&logo=vercel&logoColor=white)](https://habitapp-eta.vercel.app/)
 [![Render Backend](https://img.shields.io/badge/Render-Live%20API-46E3B7?style=flat&logo=render&logoColor=white)](https://habitapp-api.onrender.com)
 
 Este repositório reúne o backend em .NET e o frontend em Angular para o projeto HabitApp, uma aplicação para acompanhamento de hábitos, recorrências, notificações e metas de desenvolvimento pessoal.
@@ -44,6 +45,11 @@ Antes de rodar o projeto localmente, certifique-se de ter instalado:
 - .NET SDK 10
 - Node.js 22.x ou superior
 - npm 10.x ou superior
+
+## URLs públicas
+
+- Frontend: https://habitapp-eta.vercel.app/
+- API: https://habitapp-api.onrender.com
 
 ## Como rodar localmente
 

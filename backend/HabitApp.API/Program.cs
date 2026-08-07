@@ -27,7 +27,9 @@ builder.Services.AddCors(options =>
         policy.WithOrigins(
                 "http://localhost:4200",
                 "http://localhost:4210",
-                "https://localhost:4200")
+                "https://localhost:4200",
+                "https://habitapp-eta.vercel.app",
+                "http://habitapp-eta.vercel.app")
               .SetIsOriginAllowed(origin => true)
               .AllowAnyHeader()
               .AllowAnyMethod();
