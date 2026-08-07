@@ -28,26 +28,30 @@ builder.Services.AddCors(options =>
                 "http://localhost:4200",
                 "http://localhost:4210",
                 "https://localhost:4200")
+              .SetIsOriginAllowed(origin => true)
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
 
-builder.Services.AddHttpsRedirection(options =>
+if (builder.Environment.IsDevelopment())
 {
-    options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-    options.HttpsPort = 7010;
-});
+    builder.Services.AddHttpsRedirection(options =>
+    {
+        options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+        options.HttpsPort = 7010;
+    });
+}
 
 var app = builder.Build();
 
+app.UseSwagger();
+app.UseSwaggerUI();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseHttpsRedirection();
 }
-
-app.UseHttpsRedirection();
 
 app.UseCors("AllowAngular");
 

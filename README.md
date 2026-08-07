@@ -1,6 +1,7 @@
 # Desafio Trilha DevOps IA
 
 [![CI](https://github.com/alexys-fernandes/desafio-trilha-devops-ia/actions/workflows/ci.yml/badge.svg)](https://github.com/alexys-fernandes/desafio-trilha-devops-ia/actions/workflows/ci.yml)
+[![Render Backend](https://img.shields.io/badge/Render-Live%20API-46E3B7?style=flat&logo=render&logoColor=white)](https://habitapp-api.onrender.com)
 
 Este repositório reúne o backend em .NET e o frontend em Angular para o projeto HabitApp, uma aplicação para acompanhamento de hábitos, recorrências, notificações e metas de desenvolvimento pessoal.
 
