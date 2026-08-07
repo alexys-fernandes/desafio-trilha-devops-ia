@@ -65,12 +65,12 @@ Em seguida, execute a API:
 A API ficará disponível em:
 
 - http://localhost:5000
-- https://localhost:7000
+- https://localhost:7010
 
 A documentação Swagger pode ser aberta em:
 
 - http://localhost:5000/swagger
-- https://localhost:7000/swagger
+- https://localhost:7010/swagger
 
 ### 2. Frontend
 
@@ -90,6 +90,7 @@ npm start
 A aplicação ficará disponível em:
 
 - http://localhost:4200
+- http://localhost:4210
 
 ## Executando com Docker
 
