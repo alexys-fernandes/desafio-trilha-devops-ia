@@ -90,6 +90,28 @@ A aplicação ficará disponível em:
 
 - http://localhost:4200
 
+## Executando com Docker
+
+Também é possível rodar o backend e o frontend com Docker.
+
+### Backend
+
+```bash
+docker build -t habitapp-backend ./backend
+docker run -p 8080:8080 --env-file ./backend/.env habitapp-backend
+```
+
+A API ficará disponível em http://localhost:8080.
+
+### Frontend
+
+```bash
+docker build -t habitapp-frontend ./frontend
+docker run -p 8081:80 habitapp-frontend
+```
+
+A aplicação ficará disponível em http://localhost:8081.
+
 ## Configuração de ambiente (.env.example)
 
 No backend existe um arquivo de exemplo em [backend/.env.example](backend/.env.example) com as variáveis de configuração usadas pelo coach de IA. Como esse arquivo não é enviado para o repositório, você deve criar seu próprio arquivo local `.env` a partir dele.
