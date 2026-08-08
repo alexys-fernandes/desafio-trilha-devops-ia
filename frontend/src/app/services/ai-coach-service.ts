@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { AICoachRequest, AICoachResponse } from '../models/ai-coach.model';
@@ -11,6 +11,7 @@ export class AICoachService {
   constructor(private http: HttpClient) { }
 
   sendMessage(request: AICoachRequest): Observable<AICoachResponse> {
-    return this.http.post<AICoachResponse>(`${this.apiUrl}/sendMessage`, request);
+    const headers = new HttpHeaders({ 'X-Skip-Notification': 'true' });
+    return this.http.post<AICoachResponse>(`${this.apiUrl}/sendMessage`, request, { headers });
   }
 }

@@ -50,7 +50,7 @@ export class NotificationInterceptor implements HttpInterceptor {
 
   private shouldNotify(req: HttpRequest<any>): boolean {
     const url = req.url.toLowerCase();
-    return url.includes('/habit') || url.includes('/habits');
+    return (url.includes('/habit') || url.includes('/habits')) && !url.includes('/aicoach');
   }
 
   private isSuccessfulResponse(req: HttpRequest<any>, body: any): boolean {
