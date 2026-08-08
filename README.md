@@ -1,6 +1,6 @@
 # Desafio Trilha DevOps IA
 
-[![CI](https://github.com/alexys-fernandes/desafio-trilha-devops-ia/actions/workflows/ci.yml/badge.svg)](https://github.com/alexys-fernandes/desafio-trilha-devops-ia/actions/workflows/ci.yml)
+[![Tests](https://github.com/alexys-fernandes/desafio-trilha-devops-ia/actions/workflows/tests.yml/badge.svg)](https://github.com/alexys-fernandes/desafio-trilha-devops-ia/actions/workflows/tests.yml)
 [![Vercel Frontend](https://img.shields.io/badge/Vercel-Live%20App-000000?style=flat&logo=vercel&logoColor=white)](https://habitapp-eta.vercel.app/)
 [![Render Backend](https://img.shields.io/badge/Render-Live%20API-46E3B7?style=flat&logo=render&logoColor=white)](https://habitapp-api.onrender.com)
 
